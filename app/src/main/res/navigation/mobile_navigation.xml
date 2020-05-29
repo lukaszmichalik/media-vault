@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_movies">
+
+    <fragment
+        android:id="@+id/navigation_movies"
+        android:name="com.example.firebaseapp.ui.movies.MovieFragment"
+        android:label="@string/title_movies"
+        tools:layout="@layout/fragment_movie" />
+
+    <fragment
+        android:id="@+id/navigation_games"
+        android:name="com.example.firebaseapp.ui.games.GameFragment"
+        android:label="@string/title_games"
+        tools:layout="@layout/fragment_game" />
+
+    <fragment
+        android:id="@+id/navigation_books"
+        android:name="com.example.firebaseapp.ui.books.BookFragment"
+        android:label="@string/title_books"
+        tools:layout="@layout/fragment_book" />
+</navigation>
