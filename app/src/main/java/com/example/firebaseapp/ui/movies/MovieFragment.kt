@@ -1,14 +1,14 @@
 package com.example.firebaseapp.ui.movies
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
 import com.example.firebaseapp.R
 import com.example.firebaseapp.adapter.MovieAdapter
 import com.example.firebaseapp.model.Movie
+import com.example.firebaseapp.ui.AddActivity
 import com.google.firebase.database.*
 
 class MovieFragment : Fragment() {
@@ -31,7 +31,7 @@ class MovieFragment : Fragment() {
        /* homeViewModel =
             ViewModelProviders.of(this).get(MovieViewModel::class.java)*/
         val root = inflater.inflate(R.layout.fragment_movie, container, false)
-
+        setHasOptionsMenu(true)
         movieList = mutableListOf()
         ref = FirebaseDatabase.getInstance().getReference("movies")
 
@@ -91,4 +91,14 @@ class MovieFragment : Fragment() {
             }
         }
     }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.add_menu,menu)
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val intent= Intent(context, AddActivity::class.java)
+        startActivity(intent)
+        return super.onOptionsItemSelected(item)
+    }
+
 }
