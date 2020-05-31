@@ -1,6 +1,5 @@
 package com.example.firebaseapp.ui.movies
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
@@ -9,17 +8,15 @@ import androidx.fragment.app.Fragment
 import com.example.firebaseapp.R
 import com.example.firebaseapp.adapter.MovieAdapter
 import com.example.firebaseapp.model.Movie
-import com.example.firebaseapp.ui.AddActivity
+import com.example.firebaseapp.ui.add.AddMovieActivity
 import com.google.firebase.database.*
 
 
 class MovieFragment : Fragment() {
 
-    private lateinit var movieViewModel: MovieViewModel
     lateinit var ref: DatabaseReference
     lateinit var movieList: MutableList<Movie>
     lateinit var listView: ListView
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,7 +61,7 @@ class MovieFragment : Fragment() {
         inflater.inflate(R.menu.add_menu,menu)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val intent= Intent(context, AddActivity::class.java)
+        val intent= Intent(context, AddMovieActivity::class.java)
         startActivity(intent)
         return super.onOptionsItemSelected(item)
     }

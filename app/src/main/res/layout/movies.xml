@@ -4,31 +4,82 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="20dp">
+    android:padding="20dp"
+    android:weightSum="100"
+    >
 
-    <TextView
-        android:id="@+id/textViewName"
-        android:layout_width="200dp"
+    <LinearLayout
+        android:layout_weight="60"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textSize="28dp"/>
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/textViewTitle_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textSize="20dp"/>
 
-    <TextView
-        android:id="@+id/textViewUpdate"
-        android:text="Update"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
+        <TextView
+            android:id="@+id/textViewDirector_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Director"
+            android:textSize="16dp"/>
+
+        <TextView
+            android:id="@+id/textViewYear_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Year"
+            android:textSize="16dp"/>
+
+        <RatingBar
+            android:id="@+id/ratinBar_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:max="5"
+            android:stepSize="1"
+            style="?android:attr/ratingBarStyleSmall"
+            />
+    </LinearLayout>
+
     <ImageButton
-        android:id="@+id/deletebutton"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:background="@drawable/round"
-        android:src="@drawable/ic_delete_black_24dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginStart="30dp" />
+        android:id="@+id/watchedImageButton_row"
+        android:layout_weight="20"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:src="@drawable/ic_remove_red_eye_black_24dp"
 
+        />
+
+    <LinearLayout
+        android:layout_weight="20"
+        android:layout_width="0dp"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:weightSum="2">
+        <TextView
+            android:id="@+id/textViewUpdate_row"
+            android:text="Update"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:gravity="center"
+            />
+
+        <ImageButton
+            android:id="@+id/deleteButton_row"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#ffffff"
+            android:src="@drawable/ic_delete_black_24dp"
+
+         />
+    </LinearLayout>
 
 </LinearLayout>

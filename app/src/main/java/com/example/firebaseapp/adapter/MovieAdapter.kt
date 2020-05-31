@@ -23,19 +23,31 @@ class MovieAdapter(val mCtx:Context,val layoutResId:Int,val movieList:List<Movie
         val layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         val view: View = layoutInflater.inflate(layoutResId, null)
 
-        val textViewName = view.findViewById<TextView>(R.id.textViewName)
-        val textViewUpdate = view.findViewById<TextView>(R.id.textViewUpdate)
-        val deleteButton=view.findViewById<ImageView>(R.id.deletebutton)
+        val textViewTitleRow = view.findViewById<TextView>(R.id.textViewTitle_row)
+        val textViewDirectorRow = view.findViewById<TextView>(R.id.textViewDirector_row)
+        val textViewYearRow = view.findViewById<TextView>(R.id.textViewYear_row)
+        val ratingBarRow = view.findViewById<RatingBar>(R.id.ratinBar_row)
+        val watchedImageButtonRow = view.findViewById<ImageButton>(R.id.watchedImageButton_row)
+        val textViewUpdateRow = view.findViewById<TextView>(R.id.textViewUpdate_row)
+        val deleteButtonRow=view.findViewById<ImageButton>(R.id.deleteButton_row)
+
 
         val movie = movieList[position]
-        textViewName.text =movie.name
+        textViewTitleRow.text =movie.title
+        textViewDirectorRow.text=movie.director
+        textViewYearRow.text=movie.year
+        ratingBarRow.rating=movie.rating.toFloat()
 
-        textViewUpdate.setOnClickListener {
+        if(!movie.watched){
+            watchedImageButtonRow.setImageResource(R.drawable.baseline_visibility_off_black_24dp)
+        }
+
+
+        textViewUpdateRow.setOnClickListener {
             showUpdateDialog(movie)
         }
 
-        deleteButton.setOnClickListener {
-            Log.d("Tagg","clicked")
+        deleteButtonRow.setOnClickListener {
             deleteMovie(movie)
         }
 
@@ -44,15 +56,14 @@ class MovieAdapter(val mCtx:Context,val layoutResId:Int,val movieList:List<Movie
     }
 
     private fun deleteMovie(movie: Movie) {
-
-        val name:String=movie.name
+        val title:String=movie.title
         val alertDialog = AlertDialog.Builder(context)
             .setTitle("Warning")
-            .setMessage("Are You Sure to Delete: $name ?")
+            .setMessage("Are You Sure to Delete: $title ?")
             .setPositiveButton("Yes") { dialog, which ->
                 val dbMovie = FirebaseDatabase.getInstance().getReference("movies").child(movie.id)
                 dbMovie.removeValue()
-                    Toast.makeText(context,"Product $name Deleted", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context,"$title Deleted", Toast.LENGTH_SHORT).show()
                 }
             .setNegativeButton("No", DialogInterface.OnClickListener { dialog, which ->  })
             .show()
@@ -69,12 +80,27 @@ class MovieAdapter(val mCtx:Context,val layoutResId:Int,val movieList:List<Movie
 
         val view = inflater.inflate(R.layout.layout_update_movie, null)
 
-        val editText= view.findViewById<TextInputEditText>(R.id.editTextUpdate)
-        val ratingBar = view.findViewById<RatingBar>(R.id.ratingBar)
-        val textInputLayout = view.findViewById(R.id.text_input_layout) as TextInputLayout
+        val editTextTitleUpdate= view.findViewById<TextInputEditText>(R.id.editTextTitleUpdate)
+        val textInputLayoutTitleUpdate = view.findViewById(R.id.text_input_layout_update_title) as TextInputLayout
 
-        editText.setText(movie.name)
-        ratingBar.rating = movie.rating.toFloat()
+        val editTextDirectorUpdate= view.findViewById<TextInputEditText>(R.id.editTextDirectorUpdate)
+        val textInputLayoutDirectorUpdate = view.findViewById(R.id.text_input_layout_update_director) as TextInputLayout
+        val textViewYearUpdate = view.findViewById<TextView>(R.id.textViewYearUpdate)
+
+        val watchedSwitch = view.findViewById<Switch>(R.id.watchedSwitchUpdate)
+
+
+        val ratingBarUpdate = view.findViewById<RatingBar>(R.id.ratingBarUpdate)
+
+        val watchedSwitchState: Boolean = watchedSwitch.isChecked
+
+        editTextTitleUpdate.setText(movie.title)
+        editTextDirectorUpdate.setText(movie.director)
+        textViewYearUpdate.setText(movie.year)
+        watchedSwitch.isChecked = movie.watched
+
+
+        ratingBarUpdate.rating = movie.rating.toFloat()
 
         builder.setView(view)
 
@@ -90,23 +116,30 @@ class MovieAdapter(val mCtx:Context,val layoutResId:Int,val movieList:List<Movie
             .setOnClickListener {
 
                 val dbMovie = FirebaseDatabase.getInstance().getReference("movies")
-                val name = editText.text.toString().trim()
+                val title = editTextTitleUpdate.text.toString().trim()
+                val director = editTextDirectorUpdate.text.toString().trim()
 
-                if(name.isEmpty()){
-                    textInputLayout.error="Please enter name"
-                    editText.requestFocus()
-                }else {
-                    val movie2 = Movie(movie.id, name, ratingBar.rating.toInt())
+                if(title.isEmpty() || director.isEmpty()){
+                    if (title.isEmpty()){
+                        textInputLayoutTitleUpdate.error = "Please enter title"
+                        if (director.isNotEmpty()){
+                            textInputLayoutDirectorUpdate.error = null
+                        }
+                    }
+                    if(director.isEmpty()){
+                        textInputLayoutDirectorUpdate.error = "Please enter director"
+                        if (title.isNotEmpty()){
+                            textInputLayoutTitleUpdate.error = null}
+                    }
+                } else {
+                        val movie2 = Movie(movie.id, title, director,textViewYearUpdate.text.toString(),watchedSwitch.isChecked,ratingBarUpdate.rating.toInt())
 
-                    dbMovie.child(movie.id).setValue(movie2)
+                        dbMovie.child(movie.id).setValue(movie2)
 
-                    Toast.makeText(mCtx, "Movie updated", Toast.LENGTH_LONG).show()
-                    Log.d("tag3: ", "dziala")
+                        Toast.makeText(mCtx, "Movie updated", Toast.LENGTH_LONG).show()
 
-                    dialog.dismiss()
-
+                        dialog.dismiss()
+                    }
                 }
-
-            }
     }
 }
