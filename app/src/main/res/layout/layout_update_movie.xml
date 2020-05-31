@@ -23,13 +23,6 @@
              />
 
     </com.google.android.material.textfield.TextInputLayout>
-   <!-- <EditText
-    android:id="@+id/editTextUpdate"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:ems="10"
-    android:inputType="textPersonName"
-    />-->
 
     <RatingBar
         android:id="@+id/ratingBar"
