@@ -37,7 +37,6 @@ class MovieFragment : Fragment() {
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                movieList.clear()
                 if(p0.exists()){
                     movieList.clear()
                     for (h in p0.children){
@@ -48,8 +47,11 @@ class MovieFragment : Fragment() {
                     val context = context
                     if (context !=null){
                         val adapter = MovieAdapter(context, R.layout.movies, movieList)
-                        listView.adapter = adapter}
-
+                        listView.adapter = adapter
+                    }
+                }else
+                {
+                    listView.adapter=null
                 }
             }
         })
