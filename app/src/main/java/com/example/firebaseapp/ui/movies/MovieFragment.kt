@@ -1,15 +1,17 @@
 package com.example.firebaseapp.ui.movies
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.*
+import android.widget.ListView
 import androidx.fragment.app.Fragment
 import com.example.firebaseapp.R
 import com.example.firebaseapp.adapter.MovieAdapter
 import com.example.firebaseapp.model.Movie
 import com.example.firebaseapp.ui.AddActivity
 import com.google.firebase.database.*
+
 
 class MovieFragment : Fragment() {
 
@@ -24,8 +26,7 @@ class MovieFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-       /* homeViewModel =
-            ViewModelProviders.of(this).get(MovieViewModel::class.java)*/
+
         val root = inflater.inflate(R.layout.fragment_movie, container, false)
         setHasOptionsMenu(true)
         movieList = mutableListOf()
@@ -55,9 +56,6 @@ class MovieFragment : Fragment() {
                 }
             }
         })
-       /* homeViewModel.text.observe(this, Observer {
-
-        })*/
         return root
     }
 

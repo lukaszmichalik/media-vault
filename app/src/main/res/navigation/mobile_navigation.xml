@@ -9,7 +9,8 @@
         android:id="@+id/navigation_movies"
         android:name="com.example.firebaseapp.ui.movies.MovieFragment"
         android:label="@string/title_movies"
-        tools:layout="@layout/fragment_movie" />
+        tools:layout="@layout/fragment_movie"
+        />
 
     <fragment
         android:id="@+id/navigation_games"
