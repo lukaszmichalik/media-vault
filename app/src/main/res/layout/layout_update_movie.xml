@@ -43,12 +43,28 @@
     </com.google.android.material.textfield.TextInputLayout>
 
 
-    <TextView
-        android:id="@+id/textViewYearUpdate"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_layout_update_year"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Pick Year"
-        />
+        app:errorEnabled="true"
+        app:helperTextEnabled="true"
+        app:helperText="YYYY"
+        app:counterEnabled="true"
+        app:counterMaxLength="4"
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextUpdateYear"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:digits="0123456789"
+            android:hint="Enter year"
+
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <Switch
         android:id="@+id/watchedSwitchUpdate"

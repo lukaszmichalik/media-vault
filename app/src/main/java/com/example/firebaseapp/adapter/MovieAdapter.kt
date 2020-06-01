@@ -3,7 +3,6 @@ package com.example.firebaseapp.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.DialogInterface
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -85,7 +84,8 @@ class MovieAdapter(val mCtx:Context,val layoutResId:Int,val movieList:List<Movie
 
         val editTextDirectorUpdate= view.findViewById<TextInputEditText>(R.id.editTextDirectorUpdate)
         val textInputLayoutDirectorUpdate = view.findViewById(R.id.text_input_layout_update_director) as TextInputLayout
-        val textViewYearUpdate = view.findViewById<TextView>(R.id.textViewYearUpdate)
+        val editTextYearUpdate = view.findViewById<TextInputEditText>(R.id.editTextUpdateYear)
+        val textInputLayoutYearUpdate = view.findViewById(R.id.text_input_layout_update_year) as TextInputLayout
 
         val watchedSwitch = view.findViewById<Switch>(R.id.watchedSwitchUpdate)
 
@@ -96,7 +96,7 @@ class MovieAdapter(val mCtx:Context,val layoutResId:Int,val movieList:List<Movie
 
         editTextTitleUpdate.setText(movie.title)
         editTextDirectorUpdate.setText(movie.director)
-        textViewYearUpdate.setText(movie.year)
+        editTextYearUpdate.setText(movie.year)
         watchedSwitch.isChecked = movie.watched
 
 
@@ -118,21 +118,26 @@ class MovieAdapter(val mCtx:Context,val layoutResId:Int,val movieList:List<Movie
                 val dbMovie = FirebaseDatabase.getInstance().getReference("movies")
                 val title = editTextTitleUpdate.text.toString().trim()
                 val director = editTextDirectorUpdate.text.toString().trim()
+                val year = editTextYearUpdate.text.toString().trim()
 
-                if(title.isEmpty() || director.isEmpty()){
-                    if (title.isEmpty()){
+                if(title.isEmpty() || director.isEmpty() || year.isEmpty() || year.toInt() > 2020 || year.toInt() < 1888) {
+                    if(title.isEmpty()){
                         textInputLayoutTitleUpdate.error = "Please enter title"
-                        if (director.isNotEmpty()){
-                            textInputLayoutDirectorUpdate.error = null
-                        }
+                    }else{
+                        textInputLayoutTitleUpdate.error = null
                     }
                     if(director.isEmpty()){
                         textInputLayoutDirectorUpdate.error = "Please enter director"
-                        if (title.isNotEmpty()){
-                            textInputLayoutTitleUpdate.error = null}
+                    }else{
+                        textInputLayoutDirectorUpdate.error = null
+                    }
+                    if(year.isEmpty() || year.toInt() > 2020 || year.toInt() < 1888){
+                        textInputLayoutYearUpdate.error = "Wrong Year"
+                    }else{
+                        textInputLayoutYearUpdate.error = null
                     }
                 } else {
-                        val movie2 = Movie(movie.id, title, director,textViewYearUpdate.text.toString(),watchedSwitch.isChecked,ratingBarUpdate.rating.toInt())
+                        val movie2 = Movie(movie.id, title, director,year,watchedSwitch.isChecked,ratingBarUpdate.rating.toInt())
 
                         dbMovie.child(movie.id).setValue(movie2)
 

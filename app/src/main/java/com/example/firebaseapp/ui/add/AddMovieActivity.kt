@@ -1,25 +1,18 @@
 package com.example.firebaseapp.ui.add
 
-import android.app.DatePickerDialog
 import android.os.Bundle
-import android.view.View
 import android.widget.*
-import android.widget.DatePicker
 import androidx.appcompat.app.AppCompatActivity
 import com.example.firebaseapp.R
 import com.example.firebaseapp.model.Movie
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.database.FirebaseDatabase
-import java.lang.reflect.Field
-import java.text.SimpleDateFormat
-import java.util.*
-
 
 class AddMovieActivity : AppCompatActivity() {
     lateinit var  editTextTitle: TextInputEditText
-    lateinit var  editTextDirector: EditText
-    lateinit var  textViewYear: TextView
+    lateinit var  editTextDirector: TextInputEditText
+    lateinit var  editTextYear: TextInputEditText
     lateinit var  watchedSwitch : Switch
     lateinit var  ratingBar: RatingBar
     lateinit var buttonAdd: Button
@@ -30,36 +23,12 @@ class AddMovieActivity : AppCompatActivity() {
 
         editTextTitle= findViewById(R.id.editTextTitleAdd)
         editTextDirector=findViewById(R.id.editTextDirectorAdd)
-        textViewYear= findViewById(R.id.textViewYearAdd)
+        editTextYear= findViewById(R.id.editTextYearAdd)
         watchedSwitch=findViewById(R.id.watchedSwitchAdd)
         ratingBar= findViewById(R.id.ratingBarAdd)
         buttonAdd= findViewById(R.id.addButton)
 
         val watchedSwitchState: Boolean = watchedSwitch.isChecked
-
-
-        textViewYear.text = SimpleDateFormat("yyyy").format(System.currentTimeMillis())
-
-        val cal = Calendar.getInstance()
-
-        val dateSetListener = DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-            cal.set(Calendar.YEAR, year)
-            cal.set(Calendar.MONTH, monthOfYear)
-            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-
-            val myFormat = "dd.MM.yyyy" // mention the format you need
-            val sdf = SimpleDateFormat(myFormat, Locale.US)
-            textViewYear.text = sdf.format(cal.time)
-
-        }
-
-        textViewYear.setOnClickListener {
-            DatePickerDialog(this@AddMovieActivity, dateSetListener,
-                cal.get(Calendar.YEAR),
-                cal.get(Calendar.MONTH),
-                cal.get(Calendar.DAY_OF_MONTH)).show()
-        }
-
 
         buttonAdd.setOnClickListener {
             saveMovie()
@@ -69,12 +38,18 @@ class AddMovieActivity : AppCompatActivity() {
 
     private fun saveMovie() {
         val title = editTextTitle.text.toString().trim()
-        val textInputLayoutAddTitle = findViewById<TextInputLayout>(R.id.text_input_layout_add_title)
+        val textInputLayoutAddTitle =
+            findViewById<TextInputLayout>(R.id.text_input_layout_add_title)
         val director = editTextDirector.text.toString().trim()
-        val textInputLayoutAddDirector = findViewById<TextInputLayout>(R.id.text_input_layout_add_director)
+        val textInputLayoutAddDirector =
+            findViewById<TextInputLayout>(R.id.text_input_layout_add_director)
+        val year = editTextYear.text.toString().trim()
+        val textInputLayoutAddYear = findViewById<TextInputLayout>(R.id.text_input_layout_add_year)
         val watchedSwitchState: Boolean = watchedSwitch.isChecked
 
-        if(title.isEmpty() || director.isEmpty()){
+        var canFinish = true
+
+        /*if(title.isEmpty() || director.isEmpty()){
             if (title.isEmpty()){
                 textInputLayoutAddTitle.error = "Please enter title"
                 if (director.isNotEmpty()){
@@ -86,27 +61,74 @@ class AddMovieActivity : AppCompatActivity() {
                 if (title.isNotEmpty()){
                     textInputLayoutAddTitle.error = null}
             }
-        } else {
-            val ref = FirebaseDatabase.getInstance().getReference("movies")
-            val movieId = ref.push().key
-            val movie = movieId?.let {
-                Movie(
-                    movieId,
-                    title,
-                    director,
-                    textViewYear.text.toString(),
-                    watchedSwitchState,
-                    ratingBar.rating.toInt()
-                )
-            }
+        }*/
+        /*if(title.isEmpty()){
+            textInputLayoutAddTitle.error = "Please enter title"
+        }else{
+            textInputLayoutAddTitle.error = null
+            canFinish = true
+        }
 
-            if (movieId != null) {
-                ref.child(movieId).setValue(movie).addOnCompleteListener {
-                    //Toast.makeText(this, "movie saved successfully", Toast.LENGTH_LONG).show()
-                }
+        if(director.isEmpty()){
+            textInputLayoutAddDirector.error = "Please enter director"
+            canFinish = false
+        }else{
+            textInputLayoutAddDirector.error = null
+            canFinish = true
+        }
+
+        if(year.isEmpty()){
+            textInputLayoutAddYear.error = "Please enter year"
+            canFinish = false
+        }else{
+            textInputLayoutAddYear.error = null
+            canFinish = true
+        }
+
+        if (year.toInt() > 2020 || year.toInt() < 1888) {
+            textInputLayoutAddYear.error = "Wrong year"
+            canFinish = false
+        } else {
+            textInputLayoutAddYear.error = null
+            canFinish = true
+        }*/
+
+        if(title.isEmpty() || director.isEmpty() || year.isEmpty() || year.toInt() > 2020 || year.toInt() < 1888) {
+            if(title.isEmpty()){
+                textInputLayoutAddTitle.error = "Please enter title"
+            }else{
+                textInputLayoutAddTitle.error = null
             }
-            finish()
+            if(director.isEmpty()){
+                textInputLayoutAddDirector.error = "Please enter director"
+            }else{
+                textInputLayoutAddDirector.error = null
+            }
+            if(year.isEmpty() || year.toInt() > 2020 || year.toInt() < 1888){
+                textInputLayoutAddYear.error = "Wrong Year"
+            }else{
+                textInputLayoutAddYear.error = null
+            }
+        } else {
+                val ref = FirebaseDatabase.getInstance().getReference("movies")
+                val movieId = ref.push().key
+                val movie = movieId?.let {
+                    Movie(
+                        movieId,
+                        title,
+                        director,
+                        year,
+                        watchedSwitchState,
+                        ratingBar.rating.toInt()
+                    )
+                }
+
+                if (movieId != null) {
+                    ref.child(movieId).setValue(movie).addOnCompleteListener {
+                        Toast.makeText(this, "movie saved successfully", Toast.LENGTH_LONG).show()
+                    }
+                }
+                finish()
         }
     }
-    
 }
