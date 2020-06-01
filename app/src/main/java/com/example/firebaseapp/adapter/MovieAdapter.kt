@@ -30,7 +30,6 @@ class MovieAdapter(val mCtx:Context,val layoutResId:Int,val movieList:List<Movie
         val textViewUpdateRow = view.findViewById<TextView>(R.id.textViewUpdate_row)
         val deleteButtonRow=view.findViewById<ImageButton>(R.id.deleteButton_row)
 
-
         val movie = movieList[position]
         textViewTitleRow.text =movie.title
         textViewDirectorRow.text=movie.director
@@ -41,7 +40,6 @@ class MovieAdapter(val mCtx:Context,val layoutResId:Int,val movieList:List<Movie
             watchedImageButtonRow.setImageResource(R.drawable.baseline_visibility_off_black_24dp)
         }
 
-
         textViewUpdateRow.setOnClickListener {
             showUpdateDialog(movie)
         }
@@ -49,7 +47,6 @@ class MovieAdapter(val mCtx:Context,val layoutResId:Int,val movieList:List<Movie
         deleteButtonRow.setOnClickListener {
             deleteMovie(movie)
         }
-
 
         return view
     }
@@ -89,10 +86,7 @@ class MovieAdapter(val mCtx:Context,val layoutResId:Int,val movieList:List<Movie
 
         val watchedSwitch = view.findViewById<Switch>(R.id.watchedSwitchUpdate)
 
-
         val ratingBarUpdate = view.findViewById<RatingBar>(R.id.ratingBarUpdate)
-
-        val watchedSwitchState: Boolean = watchedSwitch.isChecked
 
         editTextTitleUpdate.setText(movie.title)
         editTextDirectorUpdate.setText(movie.director)
