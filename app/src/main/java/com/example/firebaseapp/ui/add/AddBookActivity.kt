@@ -60,7 +60,7 @@ class AddBookActivity : AppCompatActivity() {
 
         val readSwitchState: Boolean = readSwitch.isChecked
 
-        if(title.isEmpty() || author.isEmpty() || year.isEmpty() || year.toInt() > 2020 || year.toInt() < 1888) {
+        if(title.isEmpty() || author.isEmpty() || year.isEmpty() || year.toInt() > 2020 || year.toInt() < 1500) {
             if(title.isEmpty()){
                 textInputLayoutAddTitle.error = "Please enter title"
             }else{
@@ -71,7 +71,7 @@ class AddBookActivity : AppCompatActivity() {
             }else{
                 textInputLayoutAddAuthor.error = null
             }
-            if(year.isEmpty() || year.toInt() > 2020 || year.toInt() < 1888){
+            if(year.isEmpty() || year.toInt() > 2020 || year.toInt() < 1500){
                 textInputLayoutAddYear.error = "Wrong Year"
             }else{
                 textInputLayoutAddYear.error = null

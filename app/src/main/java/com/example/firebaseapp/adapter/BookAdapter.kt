@@ -127,7 +127,7 @@ class BookAdapter(val mCtx: Context, val layoutResId:Int, val bookList:List<Book
                 val author = editTextAuthorUpdate.text.toString().trim()
                 val year = editTextYearUpdate.text.toString().trim()
 
-                if(title.isEmpty() || author.isEmpty() || year.isEmpty() || year.toInt() > 2020 || year.toInt() < 1888) {
+                if(title.isEmpty() || author.isEmpty() || year.isEmpty() || year.toInt() > 2020 || year.toInt() < 1500) {
                     if(title.isEmpty()){
                         textInputLayoutTitleUpdate.error = "Please enter title"
                     }else{
@@ -138,7 +138,7 @@ class BookAdapter(val mCtx: Context, val layoutResId:Int, val bookList:List<Book
                     }else{
                         textInputLayoutAuthorUpdate.error = null
                     }
-                    if(year.isEmpty() || year.toInt() > 2020 || year.toInt() < 1888){
+                    if(year.isEmpty() || year.toInt() > 2020 || year.toInt() < 1500){
                         textInputLayoutYearUpdate.error = "Wrong Year"
                     }else{
                         textInputLayoutYearUpdate.error = null

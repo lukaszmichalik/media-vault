@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         app:errorEnabled="true"
         app:helperTextEnabled="true"
-        app:helperText="YYYY"
+        app:helperText="Enter year in format 'yyyy'"
         app:counterEnabled="true"
         app:counterMaxLength="4"
         >

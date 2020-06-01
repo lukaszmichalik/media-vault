@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         app:errorEnabled="true"
         app:helperTextEnabled="true"
-        app:helperText="YYYY"
+        app:helperText="Enter year btw. 1958-2020 in format 'yyyy'"
         app:counterEnabled="true"
         app:counterMaxLength="4"
         >
