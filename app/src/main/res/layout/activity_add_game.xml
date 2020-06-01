@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.add.AddMovieActivity"
+    tools:context=".ui.add.AddGameActivity"
     android:padding="24dp">
 
     <com.google.android.material.textfield.TextInputLayout
@@ -27,19 +27,19 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_layout_add_director"
+        android:id="@+id/text_input_layout_add_publisher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:errorEnabled="true"
         >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextDirectorAdd"
+            android:id="@+id/editTextPublisherAdd"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:ems="10"
             android:inputType="textPersonName"
-            android:hint="Enter director"
+            android:hint="Enter publisher"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -68,11 +68,11 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Switch
-        android:id="@+id/watchedSwitchAdd"
+        android:id="@+id/playedSwitchAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:checked="false"
-        android:text="Watched ?"
+        android:text="Played ?"
         android:textOff="No"
         android:textOn="Yes"/>
 
@@ -81,7 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:max="5"
-        android:stepSize="1" />
+        android:stepSize="1"/>
 
     <Button
         android:id="@+id/addButton"

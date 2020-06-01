@@ -10,102 +10,101 @@ import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import com.example.firebaseapp.R
-import com.example.firebaseapp.model.Movie
+import com.example.firebaseapp.model.Book
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.database.FirebaseDatabase
 
-
-class MovieAdapter(val mCtx:Context,val layoutResId:Int,val movieList:List<Movie>)
-    : ArrayAdapter<Movie>(mCtx,layoutResId,movieList) {
+class BookAdapter(val mCtx: Context, val layoutResId:Int, val bookList:List<Book>)
+    : ArrayAdapter<Book>(mCtx,layoutResId,bookList) {
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val layoutInflater: LayoutInflater = LayoutInflater.from(mCtx)
         val view: View = layoutInflater.inflate(layoutResId, null)
 
         val textViewTitleRow = view.findViewById<TextView>(R.id.textViewTitle_row)
-        val textViewDirectorRow = view.findViewById<TextView>(R.id.textViewDirector_row)
+        val textViewAuthorRow = view.findViewById<TextView>(R.id.textViewAuthor_row)
         val textViewYearRow = view.findViewById<TextView>(R.id.textViewYear_row)
         val ratingBarRow = view.findViewById<RatingBar>(R.id.ratinBar_row)
-        val watchedImageButtonRow = view.findViewById<ImageButton>(R.id.watchedImageButton_row)
+        val readImageButtonRow = view.findViewById<ImageButton>(R.id.readImageButton_row)
         val textViewUpdateRow = view.findViewById<TextView>(R.id.textViewUpdate_row)
         val deleteButtonRow=view.findViewById<ImageButton>(R.id.deleteButton_row)
 
-        val movie = movieList[position]
-        textViewTitleRow.text =movie.title
-        textViewDirectorRow.text=movie.director
-        textViewYearRow.text=movie.year
-        ratingBarRow.rating=movie.rating.toFloat()
+        val book = bookList[position]
+        textViewTitleRow.text =book.title
+        textViewAuthorRow.text=book.author
+        textViewYearRow.text=book.year
+        ratingBarRow.rating=book.rating.toFloat()
 
-        if(!movie.watched){
-            watchedImageButtonRow.setImageResource(R.drawable.baseline_visibility_off_black_24dp)
+        if(!book.read){
+            readImageButtonRow.setImageResource(R.drawable.baseline_visibility_off_black_24dp)
             ratingBarRow.isVisible=false
         }
 
         textViewUpdateRow.setOnClickListener {
-            showUpdateDialog(movie)
+            showUpdateDialog(book)
         }
 
         deleteButtonRow.setOnClickListener {
-            deleteMovie(movie)
+            deleteBook(book)
         }
 
         return view
     }
 
-    private fun deleteMovie(movie: Movie) {
-        val title:String=movie.title
+    private fun deleteBook(book: Book) {
+        val title:String=book.title
         val alertDialog = AlertDialog.Builder(context)
             .setTitle("Warning")
             .setMessage("Are You Sure to Delete: $title ?")
             .setPositiveButton("Yes") { dialog, which ->
-                val dbMovie = FirebaseDatabase.getInstance().getReference("movies").child(movie.id)
-                dbMovie.removeValue()
-                    Toast.makeText(context,"$title Deleted", Toast.LENGTH_SHORT).show()
-                }
+                val dbBook = FirebaseDatabase.getInstance().getReference("books").child(book.id)
+                dbBook.removeValue()
+                Toast.makeText(context,"$title Deleted", Toast.LENGTH_SHORT).show()
+            }
             .setNegativeButton("No", DialogInterface.OnClickListener { dialog, which ->  })
             .show()
 
     }
 
-    private fun showUpdateDialog(movie: Movie) {
+    private fun showUpdateDialog(book: Book) {
 
         val builder = AlertDialog.Builder(mCtx)
 
-        builder.setTitle("Update Movie")
+        builder.setTitle("Update Book")
 
         val inflater = LayoutInflater.from(mCtx)
 
-        val view = inflater.inflate(R.layout.layout_update_movie, null)
+        val view = inflater.inflate(R.layout.layout_update_book, null)
 
         val editTextTitleUpdate= view.findViewById<TextInputEditText>(R.id.editTextTitleUpdate)
         val textInputLayoutTitleUpdate = view.findViewById(R.id.text_input_layout_update_title) as TextInputLayout
 
-        val editTextDirectorUpdate= view.findViewById<TextInputEditText>(R.id.editTextDirectorUpdate)
-        val textInputLayoutDirectorUpdate = view.findViewById(R.id.text_input_layout_update_director) as TextInputLayout
+        val editTextAuthorUpdate= view.findViewById<TextInputEditText>(R.id.editTextAuthorUpdate)
+        val textInputLayoutAuthorUpdate = view.findViewById(R.id.text_input_layout_update_author) as TextInputLayout
         val editTextYearUpdate = view.findViewById<TextInputEditText>(R.id.editTextUpdateYear)
         val textInputLayoutYearUpdate = view.findViewById(R.id.text_input_layout_update_year) as TextInputLayout
 
-        val watchedSwitch = view.findViewById<Switch>(R.id.watchedSwitchUpdate)
+        val readSwitch = view.findViewById<Switch>(R.id.readSwitchUpdate)
 
         val ratingBarUpdate = view.findViewById<RatingBar>(R.id.ratingBarUpdate)
 
 
 
-        editTextTitleUpdate.setText(movie.title)
-        editTextDirectorUpdate.setText(movie.director)
-        editTextYearUpdate.setText(movie.year)
-        watchedSwitch.isChecked = movie.watched
-        ratingBarUpdate.rating = movie.rating.toFloat()
+        editTextTitleUpdate.setText(book.title)
+        editTextAuthorUpdate.setText(book.author)
+        editTextYearUpdate.setText(book.year)
+        readSwitch.isChecked = book.read
+        ratingBarUpdate.rating = book.rating.toFloat()
 
-        if(!watchedSwitch.isChecked){
+        if(!readSwitch.isChecked){
             ratingBarUpdate.rating = 0f
             ratingBarUpdate.isEnabled = false
         }
 
-        watchedSwitch.setOnClickListener {
-            ratingBarUpdate.isEnabled = watchedSwitch.isChecked
-            if(!watchedSwitch.isChecked){
+        readSwitch.setOnClickListener {
+            ratingBarUpdate.isEnabled = readSwitch.isChecked
+            if(!readSwitch.isChecked){
                 ratingBarUpdate.rating = 0f
             }
         }
@@ -118,26 +117,26 @@ class MovieAdapter(val mCtx:Context,val layoutResId:Int,val movieList:List<Movie
         builder.setNegativeButton("No") { p0, p1 ->
         }
 
-         val dialog = builder.create()
-         dialog.show()
+        val dialog = builder.create()
+        dialog.show()
         dialog.getButton(AlertDialog.BUTTON_POSITIVE)
             .setOnClickListener {
 
-                val dbMovie = FirebaseDatabase.getInstance().getReference("movies")
+                val dbBook = FirebaseDatabase.getInstance().getReference("books")
                 val title = editTextTitleUpdate.text.toString().trim()
-                val director = editTextDirectorUpdate.text.toString().trim()
+                val author = editTextAuthorUpdate.text.toString().trim()
                 val year = editTextYearUpdate.text.toString().trim()
 
-                if(title.isEmpty() || director.isEmpty() || year.isEmpty() || year.toInt() > 2020 || year.toInt() < 1888) {
+                if(title.isEmpty() || author.isEmpty() || year.isEmpty() || year.toInt() > 2020 || year.toInt() < 1888) {
                     if(title.isEmpty()){
                         textInputLayoutTitleUpdate.error = "Please enter title"
                     }else{
                         textInputLayoutTitleUpdate.error = null
                     }
-                    if(director.isEmpty()){
-                        textInputLayoutDirectorUpdate.error = "Please enter director"
+                    if(author.isEmpty()){
+                        textInputLayoutAuthorUpdate.error = "Please enter author"
                     }else{
-                        textInputLayoutDirectorUpdate.error = null
+                        textInputLayoutAuthorUpdate.error = null
                     }
                     if(year.isEmpty() || year.toInt() > 2020 || year.toInt() < 1888){
                         textInputLayoutYearUpdate.error = "Wrong Year"
@@ -145,14 +144,14 @@ class MovieAdapter(val mCtx:Context,val layoutResId:Int,val movieList:List<Movie
                         textInputLayoutYearUpdate.error = null
                     }
                 } else {
-                        val movie2 = Movie(movie.id, title, director,year,watchedSwitch.isChecked,ratingBarUpdate.rating.toInt())
+                    val book2 = Book(book.id, title, author,year,readSwitch.isChecked,ratingBarUpdate.rating.toInt())
 
-                        dbMovie.child(movie.id).setValue(movie2)
+                    dbBook.child(book.id).setValue(book2)
 
-                        Toast.makeText(mCtx, "Movie updated", Toast.LENGTH_LONG).show()
+                    Toast.makeText(mCtx, "Book updated", Toast.LENGTH_LONG).show()
 
-                        dialog.dismiss()
-                    }
+                    dialog.dismiss()
                 }
+            }
     }
 }

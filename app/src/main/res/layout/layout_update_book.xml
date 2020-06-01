@@ -1,51 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.add.AddMovieActivity"
     android:padding="24dp">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_layout_add_title"
+        android:id="@+id/text_input_layout_update_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:errorEnabled="true"
         >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextTitleAdd"
+            android:id="@+id/editTextTitleUpdate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:ems="10"
             android:inputType="textPersonName"
-            android:hint="Enter title"
+            android:hint="Enter your name"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_layout_add_director"
+        android:id="@+id/text_input_layout_update_author"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:errorEnabled="true"
         >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextDirectorAdd"
+            android:id="@+id/editTextAuthorUpdate"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:ems="10"
             android:inputType="textPersonName"
-            android:hint="Enter director"
+            android:hint="Enter author"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
 
+
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/text_input_layout_add_year"
+        android:id="@+id/text_input_layout_update_year"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:errorEnabled="true"
@@ -56,7 +55,7 @@
         >
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextYearAdd"
+            android:id="@+id/editTextUpdateYear"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:ems="10"
@@ -68,24 +67,18 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Switch
-        android:id="@+id/watchedSwitchAdd"
+        android:id="@+id/readSwitchUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:checked="false"
-        android:text="Watched ?"
+        android:text="Read ?"
         android:textOff="No"
         android:textOn="Yes"/>
 
     <RatingBar
-        android:id="@+id/ratingBarAdd"
+        android:id="@+id/ratingBarUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:max="5"
-        android:stepSize="1" />
-
-    <Button
-        android:id="@+id/addButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Add" />
+        android:stepSize="1"/>
 </LinearLayout>

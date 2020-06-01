@@ -20,10 +20,10 @@
             android:textSize="20dp"/>
 
         <TextView
-            android:id="@+id/textViewDirector_row"
+            android:id="@+id/textViewPublisher_row"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Director"
+            android:text="Publisher"
             android:textSize="16dp"/>
 
         <TextView
@@ -44,7 +44,7 @@
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/watchedImageButton_row"
+        android:id="@+id/playedImageButton_row"
         android:layout_weight="20"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -78,7 +78,7 @@
             android:background="#ffffff"
             android:src="@drawable/ic_delete_black_24dp"
 
-         />
+            />
     </LinearLayout>
 
 </LinearLayout>
